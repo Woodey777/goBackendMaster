@@ -7,15 +7,15 @@ import (
 
 const symbols = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-func RandomVal(min, max float64) float64 {
-	return min + rand.Float64()*(max-min)
+func RandomVal(min, max int64) int64 {
+	return min + rand.Int63n(max-min+1)
 }
 
 func RandomString(n int) string {
 	b := strings.Builder{}
 	b.Grow(n)
 
-	for _ = range n {
+	for range n {
 		b.WriteByte(symbols[rand.Intn(len(symbols))])
 	}
 
@@ -26,7 +26,7 @@ func RandomOwner() string {
 	return RandomString(10)
 }
 
-func RandomMoney() float64 {
+func RandomMoney() int64 {
 	return RandomVal(0, 1000)
 }
 

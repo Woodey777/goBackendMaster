@@ -10,6 +10,7 @@ import (
 )
 
 var testQueries *Queries
+var testDB *sql.DB
 
 const (
 	driver    = "postgres"
@@ -17,11 +18,12 @@ const (
 )
 
 func TestMain(m *testing.M) {
-	conn, err := sql.Open(driver, sourseStr)
+	var err error
+	testDB, err = sql.Open(driver, sourseStr)
 	if err != nil {
 		log.Fatalf("connection to DB: %v", err)
 	}
 
-	testQueries = New(conn)
+	testQueries = New(testDB)
 	os.Exit(m.Run())
 }
