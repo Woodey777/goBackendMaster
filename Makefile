@@ -21,3 +21,6 @@ migrate_down:
 
 generate_sqlc:
 	sqlc generate
+
+test:
+	go test -v -cover db/sqlc_files/*
