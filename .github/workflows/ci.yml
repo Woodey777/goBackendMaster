@@ -8,8 +8,24 @@ on:
 
 jobs:
 
-  build:
+  test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        # Docker Hub image
+        image: postgres:latest
+        env:
+          POSTGRES_PASSWORD: admin
+          POSTGRES_USER:     admin
+          POSTGRES_DB:       bank_db
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 60000:5432
+
     steps:
     - uses: actions/checkout@v4
 
@@ -17,6 +33,9 @@ jobs:
       uses: actions/setup-go@v4
       with:
         go-version: '1.23'
+
+    - name: Run migrations
+      run: make migrate_up
 
     - name: Run test
       run: make test
