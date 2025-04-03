@@ -18,3 +18,6 @@ migrate_up:
 
 migrate_down:
 	migrate -path db/migration -database "postgresql://admin:admin@localhost:60000/bank_db?sslmode=disable" -verbose down
+
+generate_sqlc:
+	sqlc generate
